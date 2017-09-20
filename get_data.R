@@ -5,13 +5,13 @@ library(tidyverse)
 creds <- yaml.load_file("qualtrics.yml")
 registerOptions(api_token = creds$api_token, root_url = creds$root_url)
 
-get_responses <- function(survey_name) {
+get_responses <- function(survey_name, ...) {
   survey_id <- get_survey_id_from_name(survey_name)
   
   # Get raw responses in wide format (one column per subquestion)
   data_dir <- "data"
   if (!dir.exists(data_dir)) dir.create(data_dir)
-  results <- getSurvey(survey_id, save_dir = data_dir)
+  results <- getSurvey(survey_id, save_dir = data_dir, ...)
   
   # Extract subquestion info from column attributes
   subquestion_labels <- lapply(results, attributes) %>%
