@@ -33,6 +33,8 @@ factor_map <- bind_rows(factor_3_map) #, factor_4_map, factor_N_map)
 # Merge the question data with the factor map.
 # Creates a new column q182$label
 q182 <- left_join(q182, factor_map)
+
+# Calculate the mean response for each subquestion.
 q182_means <- q182 %>%
   group_by(label, subq_labeln) %>%
   summarize(response = mean(response, na.rm = TRUE)) %>%
